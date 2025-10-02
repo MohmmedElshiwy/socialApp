@@ -23,7 +23,7 @@ export default function PostDetails() {
   if (error) return <p>Something went wrong</p>;
 
   return (
-    <div className="w-full md:w-1/2 lg:w-1/3 mx-auto mt-10">
+    <div className="size-full md:w-1/2 lg:w-2/3 mx-auto mt-10">
       <PostCard post={data?.post} currentUser={currentUser}  />
     </div>
   );

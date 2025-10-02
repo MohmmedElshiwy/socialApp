@@ -9,11 +9,13 @@ export default function PostFooter({ currentUser, postUserId }) {
   const { newComments, setNewComments, isLoading } = useContext(CommentsContext);
   const [editingId, setEditingId] = useState(null);
   const [editContent, setEditContent] = useState("");
+  const [Loading,setLoading]=useState(false)
 
 
   // دالة تعديل كومنت موجود
   async function submitEdit(e) {
     e.preventDefault();
+    setLoading(true)
     if (!editContent.trim()) return;
 
     await EditComment(editingId, editContent);
@@ -22,6 +24,7 @@ export default function PostFooter({ currentUser, postUserId }) {
     );
     setEditingId(null);
     setEditContent("");
+    setLoading(false)
   }
 
   if (isLoading) return <CardFooter>Loading comments...</CardFooter>;
@@ -47,6 +50,8 @@ export default function PostFooter({ currentUser, postUserId }) {
                     setEditingId(c._id);
                     setEditContent(c.content);
                   }}
+                   queryKey={"comments"}
+
                 />
               </span>
             )}
@@ -60,7 +65,7 @@ export default function PostFooter({ currentUser, postUserId }) {
                   placeholder="Edit comment..."
                   className="flex-1"
                 />
-                <Button type="submit" color="primary">Save</Button>
+                <Button isLoading={Loading} type="submit" color="primary">Save</Button>
                 <Button onClick={() => setEditingId(null)}>Cancel</Button>
               </form>
             ) : (

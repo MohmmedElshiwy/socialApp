@@ -23,10 +23,11 @@ export default function PostCard({ post, currentUser }) {
             <span className="cursor-pointer w-fit bg-gray-300 rounded-bl-lg absolute z-10 end-0">
               <DropDown
                 id={_id}
-                deleteFn={DeletePost}
+                deleteFn={()=>DeletePost(_id)}
                 queryKey="posts"
                 successMsg="Post deleted successfully ✅"
                 errorMsg="Failed to delete post ❌"
+                
               />
             </span>
           )}

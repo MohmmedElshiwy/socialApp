@@ -3,14 +3,25 @@ import Dots from "./Dots";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-export default function DropDown({ deleteFn, editFn }) {
+export default function DropDown({ deleteFn, editFn ,queryKey}) {
   const queryClient = useQueryClient();
 
   const { mutate: deleteComment } = useMutation({
     mutationFn: deleteFn,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] });
-      toast.success("Comment deleted successfully ✅");
+      if(queryKey==="comments"){
+
+        queryClient.invalidateQueries({ queryKey: ["comments"] });
+        toast.success("Comment deleted successfully ✅");
+      }
+     else if(queryKey ==="posts"){
+
+       queryClient.invalidateQueries({ queryKey: ["posts"] });
+       toast.success("Post deleted successfully ✅");
+    } 
+      
+
+      
     },
     onError: () => toast.error("Failed to delete comment ❌"),
   });
